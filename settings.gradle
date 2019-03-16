@@ -1,0 +1,10 @@
+pluginManagement {
+	repositories {
+		gradlePluginPortal()
+	}
+}
+rootProject.name = 'gradle-bootjar-problem'
+
+include 'app'
+include 'foo:client'
+include 'bar:client'
