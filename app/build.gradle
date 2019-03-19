@@ -11,6 +11,10 @@ sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
+	mavenLocal()
+	flatDir {
+		dirs  "${project(':baz:client').buildDir}/libs"
+	}
 }
 
 dependencies {
@@ -18,6 +22,30 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	implementation project(":foo:client")
-	implementation project(":bar:client")
 
+	implementation "com.example.bar:client:1.0.0-SNAPSHOT"
+	implementation name: "client-1.0.0-SNAPSHOT" //baz
+
+}
+
+
+
+task showSourceClasspath(){
+	doLast {
+
+		configurations
+				.getByName(sourceSets.main.compileClasspathConfigurationName)
+				.resolvedConfiguration
+				.resolvedArtifacts
+				.grep({it.file.name.startsWith("client")})
+				.each {
+					println """
+					################################################################
+					Name: $it.name
+					Id:   $it.id / ${it.id.componentIdentifier.getClass().simpleName}
+					File: $it.file
+					################################################################
+					""".stripIndent()
+		}
+	}
 }

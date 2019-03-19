@@ -1,5 +1,13 @@
 # Gradle same dependency archive name problem
 
+## Build
+```
+./gradlew bar:client:pTML baz:client:build // ensure local dependencies
+
+./gradlew build
+```
+
+## Show problem
 ```
 ./gradlew :app:bootJar
 
@@ -20,5 +28,11 @@ Caused by: java.lang.ClassNotFoundException: com.example.foo.FooClient
         at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:521)
         ... 7 more
 
+```
+
+
+## Show resolved artifacts with type
+```
+./gradlew :app:showSourceClasspath
 ```
 
